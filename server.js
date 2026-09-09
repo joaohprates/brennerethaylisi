@@ -108,11 +108,6 @@ app.post("/api/rsvp", async (req, res) => {
   }
 });
 
-const server = app.listen(PORT, () => {
-  console.log(`Site no ar: http://localhost:${PORT}`);
-  console.log("Arquivos estáticos:", publicDir);
-});
-
 prepareSheets()
   .then(() => console.log("Planilha pronta (abas Convites e confirmações)."))
   .catch((err) => {
@@ -124,3 +119,12 @@ prepareSheets()
       "como Editor."
     );
   });
+
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Site no ar: http://localhost:${PORT}`);
+    console.log("Arquivos estáticos:", publicDir);
+  });
+}
+
+export default app;
