@@ -3,13 +3,13 @@ VERSION:2.0
 PRODID:-//Brenner e Thaylisi//Nosso Casamento//PT-BR
 CALSCALE:GREGORIAN
 BEGIN:VEVENT
-UID:brenner-thaylisi-20261114@nosso-casamento
-DTSTAMP:20260907T160000Z
-DTSTART:20261114T190000Z
+UID:brenner-thaylisi-20270207@nosso-casamento
+DTSTAMP:20260909T160000Z
+DTSTART:20270207T190000Z
 SUMMARY:Casamento de Brenner e Thaylisi
-DESCRIPTION:Cerimônia às 16h (horário de São Paulo).
+DESCRIPTION:Cerimônia às 16h (horário de Brasília).
  Recepção e festa no mesmo local.
-LOCATION:Espaço Jardim das Flores\, Rua das Acácias\, 123
-  - São Paulo/SP
+LOCATION:Chácara Mil\, Conj. Hab. João de Barro Thais\,
+ Maringá - PR\, Brazil
 END:VEVENT
 END:VCALENDAR

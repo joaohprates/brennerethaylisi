@@ -48,7 +48,7 @@ button { cursor: pointer; }
 button:disabled { cursor: wait; opacity: .6; }
 a, button { touch-action: manipulation; }
 :focus-visible { outline: 2px solid var(--magenta); }
-h1:focus, h2:focus, main:focus, .rsvp-sucesso:focus { outline: none; }
+h1:focus, h2:focus, main:focus { outline: none; }
 ::selection { background: #f3d4d8; color: var(--magenta-dark); }
 .svg-library { position: absolute; width: 0; height: 0; overflow: hidden; }
 .icon { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.35; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
@@ -75,7 +75,7 @@ h1:focus, h2:focus, main:focus, .rsvp-sucesso:focus { outline: none; }
   letter-spacing: .02em;
 }
 .monogram span { font-size: 28px; padding: 0 6px; color: var(--magenta); }
-.main-nav { display: flex; align-items: center; gap: 35px; margin-left: 80px; }
+.main-nav { display: flex; align-items: center; gap: 35px; margin-left: auto; }
 .main-nav a {
   font-family: var(--serif);
   font-size: 11px;
@@ -257,11 +257,13 @@ h1:focus, h2:focus, main:focus, .rsvp-sucesso:focus { outline: none; }
 }
 .inv-actions {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   padding-top: 6px;
   position: relative;
   z-index: 2;
+  max-width: 420px;
+  margin: 0 auto;
 }
 .inv-action {
   display: flex;
@@ -444,42 +446,6 @@ h1:focus, h2:focus, main:focus, .rsvp-sucesso:focus { outline: none; }
 .gifts-note { display: flex; align-items: center; justify-content: center; gap: 11px; font: italic 24px var(--body); margin: 40px 0 8px; }
 .gifts-note .icon { width: 20px; color: var(--coral); }
 
-.rsvp-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 85px; align-items: start; margin: 36px 0 30px; }
-.rsvp-copy { position: relative; padding: 28px 0 85px; }
-.rsvp-copy .page-title { font-size: clamp(45px, 4.9vw, 65px); }
-.rsvp-copy .page-intro { margin-left: 0; max-width: 39ch; }
-.rsvp-date { display: flex; align-items: center; gap: 10px; font-size: 16px; color: var(--magenta); margin-top: 26px; }
-.rsvp-date .icon { width: 18px; }
-.rsvp-signature { margin-top: 45px; font-size: 15px; color: var(--muted); }
-.rsvp-signature span { font: 400 36px/1.6 var(--script); color: var(--ink); }
-.rsvp-panel { background: var(--white); border: 1px solid var(--line); padding: 33px; border-radius: 4px; box-shadow: 0 12px 30px #55423308; }
-.rsvp-stepper { display: flex; align-items: center; gap: 10px; font-family: var(--serif); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding-bottom: 25px; margin-bottom: 26px; border-bottom: 1px solid var(--line); }
-.rsvp-stepper > span:not(.step-line) { display: flex; align-items: center; gap: 7px; white-space: nowrap; }
-.rsvp-stepper b { display: grid; place-items: center; width: 25px; height: 25px; border: 1px solid var(--line); border-radius: 50%; font-weight: 400; font-size: 9px; }
-.rsvp-stepper .is-current { color: var(--magenta); }
-.rsvp-stepper .is-current b { background: var(--magenta); border-color: var(--magenta); color: white; }
-.step-line { height: 1px; background: var(--line); flex: 1; }
-.rsvp-form h3, .rsvp-sucesso h3 { font: 400 34px/1.1 var(--body); }
-.form-intro { font-size: 16px; color: var(--muted); margin: 12px 0 25px; line-height: 1.7; }
-.rsvp-label { display: block; font-family: var(--serif); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; margin: 18px 0 8px; }
-.rsvp-input { display: block; width: 100%; min-width: 0; height: 51px; padding: 12px 15px; border: 1px solid #e0d0c4; border-radius: 3px; background: var(--paper); color: var(--ink); font-size: 16px; }
-.rsvp-input::placeholder { color: #96877e; font-size: 15px; }
-.rsvp-input:focus { border-color: var(--magenta); outline: 2px solid #c43b5c22; outline-offset: 1px; }
-.rsvp-input[aria-invalid="true"] { border-color: #a73d3d; }
-.input-code { text-transform: uppercase; letter-spacing: .13em; }
-.rsvp-hint { font-size: 14px; color: var(--muted); margin-top: 9px; }
-.rsvp-btn { width: 100%; margin-top: 25px; }
-.rsvp-familia { background: var(--soft); padding: 13px; font-size: 16px; color: var(--magenta-dark); margin-top: 18px; border-left: 2px solid var(--coral); }
-.rsvp-acoes .back-link { display: flex; margin: 12px auto 0; }
-.rsvp-msg { font-size: 16px; line-height: 1.7; }
-.rsvp-msg:not(:empty) { margin-top: 18px; padding: 12px; background: #f8ece8; border-radius: 3px; }
-.rsvp-msg.erro { color: #963c36; }
-.rsvp-help { font-size: 14px; color: var(--muted); text-align: center; border-top: 1px solid var(--line); padding-top: 19px; margin-top: 26px; }
-.rsvp-sucesso { text-align: center; padding: 15px 0; }
-.sucesso-icon { width: 53px; height: 53px; color: var(--leaf); margin-bottom: 18px; }
-.rsvp-sucesso p { font-size: 17px; color: var(--muted); margin: 20px 0; }
-.rsvp-sucesso .back-link { display: flex; margin: 12px auto 0; }
-
 .site-footer { max-width: 1120px; margin: auto; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 24px 0 30px; }
 .site-footer .monogram { font-size: 34px; }
 .site-footer .monogram span { font-size: 22px; }
@@ -507,8 +473,7 @@ h1:focus, h2:focus, main:focus, .rsvp-sucesso:focus { outline: none; }
   .countdown-section, .home-guide, .site-footer { margin-left: 7%; margin-right: 7%; }
   .countdown { gap: 16px; }
   .countdown-heading h2 { font-size: 28px; }
-  .main-nav { margin-left: 35px; }
-  .rsvp-layout { gap: 45px; }
+  .main-nav { margin-left: auto; }
 }
 @media (max-width: 950px) {
   .site-header { padding: 0 5%; height: 85px; }
@@ -540,23 +505,19 @@ h1:focus, h2:focus, main:focus, .rsvp-sucesso:focus { outline: none; }
   .guide-icon { display: none; }
   .guide-card h3 { font-size: 28px; }
   .page-inner { padding-left: 5%; padding-right: 5%; }
-  .rsvp-layout { gap: 30px; }
-  .rsvp-copy .eyebrow { font-size: 8px; }
-  .rsvp-panel { padding: 26px; }
   .gift-list { grid-template-columns: 1fr; }
 }
 @media (max-width: 700px) {
   .site-header { height: auto; min-height: 112px; flex-wrap: wrap; gap: 7px 20px; padding: 15px 6% 9px; }
   .monogram { font-size: 38px; }
-  .header-rsvp { margin-left: auto; font-size: 9px; gap: 10px; }
-  .main-nav { order: 3; width: 100%; justify-content: center; gap: 28px; }
+  .main-nav { order: 3; width: 100%; justify-content: center; gap: 28px; margin-left: 0; }
   .main-nav a { font-size: 10px; padding: 8px 0 11px; }
   .main-nav a::after { bottom: 5px; }
   .invitation { margin: 4px 4% 48px; }
   .inv-inner { padding: 24px 16px 26px; }
   .inv-names { font-size: clamp(58px, 16vw, 84px); }
   .inv-quote { font-size: 9px; letter-spacing: .14em; }
-  .inv-actions { grid-template-columns: 1fr 1fr; gap: 18px 8px; }
+  .inv-actions { max-width: none; gap: 12px 8px; }
   .hero { grid-template-columns: 1fr; gap: 34px; padding: 35px 7% 30px; }
   .hero-copy { text-align: center; }
   .hero-copy > .eyebrow { justify-content: center; font-size: 8px; }
@@ -609,15 +570,6 @@ h1:focus, h2:focus, main:focus, .rsvp-sucesso:focus { outline: none; }
   .gift-info { min-width: 180px; }
   .gift-btn { margin-left: 33px; }
   .gifts-note { font-size: 21px; text-align: center; align-items: flex-start; }
-  .rsvp-layout { grid-template-columns: 1fr; gap: 22px; margin-top: 12px; }
-  .rsvp-copy { padding: 10px 0; text-align: center; }
-  .rsvp-copy .page-title { font-size: 49px; }
-  .rsvp-copy .page-intro { margin: auto; }
-  .rsvp-date { justify-content: center; margin-top: 19px; font-size: 15px; }
-  .rsvp-signature { margin-top: 17px; }
-  .rsvp-signature span { font-size: 30px; }
-  .rsvp-panel { padding: 24px; }
-  .rsvp-stepper { font-size: 9px; }
   .site-footer { margin: 0 7%; gap: 13px; flex-wrap: wrap; justify-content: center; padding: 23px 0; }
   .site-footer .monogram { width: 100%; justify-content: center; }
   .site-footer p { font-size: 18px; }
@@ -632,8 +584,7 @@ h1:focus, h2:focus, main:focus, .rsvp-sucesso:focus { outline: none; }
   .home-film { height: 345px; }
   .countdown { gap: 8px; }
   .countdown > div { min-width: 42px; }
-  .rsvp-panel { padding: 20px; }
-  .page-title, .rsvp-copy .page-title { font-size: 43px; }
+  .page-title { font-size: 43px; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
