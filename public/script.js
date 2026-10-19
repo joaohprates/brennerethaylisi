@@ -69,7 +69,9 @@ function updateCountdown() {
   const seconds = Math.max(0, Math.floor((weddingTime - Date.now()) / 1000));
   const values = [Math.floor(seconds / 86400), Math.floor(seconds / 3600) % 24, Math.floor(seconds / 60) % 60, seconds % 60];
   ["days", "hours", "minutes", "seconds"].forEach((unit, index) => {
-    document.getElementById("count-" + unit).textContent = String(values[index]).padStart(2, "0");
+    document.querySelectorAll('[data-count="' + unit + '"]').forEach((el) => {
+      el.textContent = String(values[index]).padStart(2, "0");
+    });
   });
   if (seconds === 0) {
     document.getElementById("countdown-eyebrow").textContent = "O NOSSO PARA SEMPRE";
@@ -79,50 +81,66 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-// A seleção é uma lista de favoritos local, sem pagamento ou envio aos noivos.
+// Os presentes são pagos por Pix direto aos noivos; o site só exibe valores e copia a chave.
+const PIX_KEY = "brenner.carvalho00@gmail.com";
 const PRESENTES_EMOCIONAIS = [
-  { id: 1, nome: "Brinde dos noivos", desc: "Uma taça especial para o primeiro brinde da festa." },
-  { id: 2, nome: "Cota lua de mel", desc: "Um carinho para a nossa primeira viagem de casados." },
-  { id: 3, nome: "Jantar romântico", desc: "Um jantar à luz de velas durante a lua de mel." },
-  { id: 4, nome: "Sessão de fotos", desc: "Registros dos primeiros dias da nossa vida a dois." },
-  { id: 5, nome: "Passeio ao pôr do sol", desc: "Um passeio inesquecível para dois." },
-  { id: 6, nome: "Carta para o futuro", desc: "Uma carta para abrir no primeiro aniversário de casamento." },
-  { id: 7, nome: "Uma música na festa", desc: "Aquela música que vai fazer a gente dançar." },
-  { id: 8, nome: "Plante uma árvore", desc: "Um gesto simbólico que cresce junto com a gente." },
+  { id: 1, nome: "1 caixa de piso", desc: "Pra noiva que só anda descalça.", valor: 250 },
+  { id: 2, nome: "1 lata de tinta", desc: "Para colorir os ambientes.", valor: 300 },
+  { id: 3, nome: "Pedrinhas", desc: "Para o nosso jardim.", valor: 70 },
+  { id: 4, nome: "Fechadura", desc: "Para proteger nosso cantinho do amor.", valor: 85 },
+  { id: 5, nome: "Mangueira", desc: "Para o noivo lavar a calçada.", valor: 100 },
+  { id: 6, nome: "1 saco de cimento", desc: "Para firmar nosso amor.", valor: 80 },
+  { id: 7, nome: "Plafon", desc: "Para iluminar, porque a noiva não gosta de ambientes escuros.", valor: 150 },
+  { id: 8, nome: "Churrasqueira", desc: "Para receber os amigos.", valor: 400 },
+  { id: 9, nome: "Torneira", desc: "Pra deixar nosso lar bem limpinho 🙌🏻", valor: 125 },
+  { id: 10, nome: "1 cortina", desc: "Para garantir nossa privacidade (e esconder a bagunça).", valor: 180 },
+  { id: 11, nome: "Cerca elétrica", desc: "Para não recebermos mais as visitas indesejadas (que nos furtaram durante a construção kk).", valor: 400 },
+  { id: 12, nome: "1 espelho", desc: "Para conferir se estamos prontos para a vida adulta.", valor: 150 },
 ];
-const STORAGE_KEY = "presentesEmocionais";
-const presenteados = new Set();
-try {
-  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-  if (Array.isArray(saved)) saved.filter((id) => PRESENTES_EMOCIONAIS.some((gift) => gift.id === id)).forEach((id) => presenteados.add(id));
-} catch { /* A navegação deve funcionar mesmo com armazenamento bloqueado. */ }
+const formatBRL = (valor) => valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+const giftFeedback = document.getElementById("gift-feedback");
+
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    const field = document.createElement("textarea");
+    field.value = text;
+    field.setAttribute("readonly", "");
+    field.style.position = "fixed";
+    field.style.opacity = "0";
+    document.body.appendChild(field);
+    field.select();
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch { /* Sem suporte a cópia. */ }
+    field.remove();
+    return ok;
+  }
+}
+async function copyPix(gift) {
+  const ok = await copyText(PIX_KEY);
+  if (!ok) {
+    giftFeedback.textContent = "Não foi possível copiar. A chave Pix é: " + PIX_KEY;
+    return;
+  }
+  giftFeedback.textContent = gift
+    ? "Chave Pix copiada! Faça um Pix de " + formatBRL(gift.valor) + " para presentear: " + gift.nome + "."
+    : "Chave Pix copiada!";
+}
+document.getElementById("pix-copy").addEventListener("click", () => copyPix());
 
 const giftList = document.getElementById("gift-list");
-function updateGiftButton(button, gift) {
-  const saved = presenteados.has(gift.id);
-  button.textContent = saved ? "Salvo ✓" : "Salvar ideia";
-  button.setAttribute("aria-pressed", String(saved));
-  button.setAttribute("aria-label", (saved ? "Remover ideia: " : "Salvar ideia: ") + gift.nome);
-}
 PRESENTES_EMOCIONAIS.forEach((gift) => {
   const item = document.createElement("li");
   item.className = "gift-item";
-  item.innerHTML = '<span class="gift-number" aria-hidden="true">' + String(gift.id).padStart(2, "0") + '</span><div class="gift-info"><h4 class="gift-nome"></h4><p class="gift-desc"></p></div><button type="button" class="gift-btn"></button>';
+  item.innerHTML = '<span class="gift-number" aria-hidden="true">' + String(gift.id).padStart(2, "0") + '</span><div class="gift-info"><h4 class="gift-nome"></h4><p class="gift-desc"></p><p class="gift-valor"></p></div><button type="button" class="gift-btn">Presentear via Pix</button>';
   item.querySelector(".gift-nome").textContent = gift.nome;
   item.querySelector(".gift-desc").textContent = gift.desc;
+  item.querySelector(".gift-valor").textContent = formatBRL(gift.valor);
   const button = item.querySelector("button");
-  updateGiftButton(button, gift);
-  button.addEventListener("click", () => {
-    if (presenteados.has(gift.id)) presenteados.delete(gift.id);
-    else presenteados.add(gift.id);
-    let persisted = true;
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify([...presenteados])); }
-    catch { persisted = false; }
-    updateGiftButton(button, gift);
-    document.getElementById("gift-feedback").textContent = persisted
-      ? (presenteados.has(gift.id) ? "Ideia salva neste dispositivo: " : "Ideia removida: ") + gift.nome + "."
-      : "A seleção ficará disponível apenas enquanto esta página estiver aberta.";
-  });
+  button.setAttribute("aria-label", "Copiar chave Pix para presentear: " + gift.nome + ", " + formatBRL(gift.valor));
+  button.addEventListener("click", () => copyPix(gift));
   giftList.appendChild(item);
 });
 const btnEmocionais = document.getElementById("btn-emocionais");
