@@ -81,7 +81,7 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-// Os presentes são pagos por Pix direto aos noivos; o site só exibe valores e copia a chave.
+// Os presentes são pagos por Pix direto aos noivos; o site só gera o QR code e copia a chave.
 const PIX_KEY = "brenner.carvalho00@gmail.com";
 const PRESENTES_EMOCIONAIS = [
   { id: 1, nome: "1 caixa de piso", desc: "Pra noiva que só anda descalça.", valor: 250 },
@@ -118,17 +118,61 @@ async function copyText(text) {
     return ok;
   }
 }
-async function copyPix(gift) {
-  const ok = await copyText(PIX_KEY);
-  if (!ok) {
-    giftFeedback.textContent = "Não foi possível copiar. A chave Pix é: " + PIX_KEY;
-    return;
+document.getElementById("pix-copy").addEventListener("click", async () => {
+  giftFeedback.textContent = (await copyText(PIX_KEY))
+    ? "Chave Pix copiada!"
+    : "Não foi possível copiar. A chave Pix é: " + PIX_KEY;
+});
+
+// BR Code estático do Pix (padrão EMV do Banco Central). Nome e cidade: sem acentos, até 25 e 15 caracteres.
+const PIX_NOME = "BRENNER CARVALHO";
+const PIX_CIDADE = "MARINGA";
+const emv = (id, value) => id + String(value.length).padStart(2, "0") + value;
+function crc16(payload) {
+  let crc = 0xffff;
+  for (let i = 0; i < payload.length; i++) {
+    crc ^= payload.charCodeAt(i) << 8;
+    for (let bit = 0; bit < 8; bit++) crc = crc & 0x8000 ? ((crc << 1) ^ 0x1021) & 0xffff : (crc << 1) & 0xffff;
   }
-  giftFeedback.textContent = gift
-    ? "Chave Pix copiada! Faça um Pix de " + formatBRL(gift.valor) + " para presentear: " + gift.nome + "."
-    : "Chave Pix copiada!";
+  return crc.toString(16).toUpperCase().padStart(4, "0");
 }
-document.getElementById("pix-copy").addEventListener("click", () => copyPix());
+function pixPayload(valor) {
+  const payload =
+    emv("00", "01") +
+    emv("26", emv("00", "br.gov.bcb.pix") + emv("01", PIX_KEY)) +
+    emv("52", "0000") +
+    emv("53", "986") +
+    (valor ? emv("54", valor.toFixed(2)) : "") +
+    emv("58", "BR") +
+    emv("59", PIX_NOME) +
+    emv("60", PIX_CIDADE) +
+    emv("62", emv("05", "***")) +
+    "6304";
+  return payload + crc16(payload);
+}
+
+const pixDialog = document.getElementById("pix-dialog");
+const pixDialogFeedback = document.getElementById("pix-dialog-feedback");
+let currentPixCode = "";
+function openPix(gift) {
+  currentPixCode = pixPayload(gift?.valor);
+  document.getElementById("pix-dialog-title").textContent = gift ? gift.nome : "Um carinho para o nosso lar";
+  document.getElementById("pix-dialog-valor").textContent = gift ? formatBRL(gift.valor) : "Valor livre";
+  const qr = qrcode(0, "M");
+  qr.addData(currentPixCode);
+  qr.make();
+  document.getElementById("pix-qr-code").innerHTML = qr.createSvgTag({ cellSize: 6, margin: 2, scalable: true, alt: "QR code Pix" });
+  pixDialogFeedback.textContent = "";
+  pixDialog.showModal();
+}
+document.getElementById("pix-qr").addEventListener("click", () => openPix());
+document.getElementById("pix-close").addEventListener("click", () => pixDialog.close());
+pixDialog.addEventListener("click", (event) => { if (event.target === pixDialog) pixDialog.close(); });
+document.getElementById("pix-copy-code").addEventListener("click", async () => {
+  pixDialogFeedback.textContent = (await copyText(currentPixCode))
+    ? "Código copiado! Cole no app do seu banco em Pix copia e cola."
+    : "Não foi possível copiar. Use a chave acima.";
+});
 
 const giftList = document.getElementById("gift-list");
 PRESENTES_EMOCIONAIS.forEach((gift) => {
@@ -139,8 +183,8 @@ PRESENTES_EMOCIONAIS.forEach((gift) => {
   item.querySelector(".gift-desc").textContent = gift.desc;
   item.querySelector(".gift-valor").textContent = formatBRL(gift.valor);
   const button = item.querySelector("button");
-  button.setAttribute("aria-label", "Copiar chave Pix para presentear: " + gift.nome + ", " + formatBRL(gift.valor));
-  button.addEventListener("click", () => copyPix(gift));
+  button.setAttribute("aria-label", "Abrir QR code Pix para presentear: " + gift.nome + ", " + formatBRL(gift.valor));
+  button.addEventListener("click", () => openPix(gift));
   giftList.appendChild(item);
 });
 const btnEmocionais = document.getElementById("btn-emocionais");

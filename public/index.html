@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Allura&family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <script src="vendor/qrcode.js" defer></script>
   <script src="script.js" defer></script>
 </head>
 <body>
@@ -145,11 +146,22 @@
           <a class="opcao-card" href="https://share.google/OH02fJundNNok0JPJ" target="_blank" rel="noopener noreferrer"><span class="gift-category">01 / PARA O NOSSO LAR</span><svg class="icon opcao-icon" aria-hidden="true"><use href="#icon-gift"/></svg><h3>Uma casa, muitos começos.</h3><p>Reunimos itens para o nosso lar. Escolha o que quiser presentear na lista.</p><span class="opcao-cta">Abrir a lista <span aria-hidden="true">↗</span></span></a>
           <button type="button" class="opcao-card opcao-card-emotional" id="btn-emocionais" aria-expanded="false" aria-controls="lista-emocionais"><span class="gift-category">02 / PARA A NOSSA HISTÓRIA</span><svg class="icon opcao-icon" aria-hidden="true"><use href="#icon-heart"/></svg><h3>Presentes emocionais.</h3><p>Do piso para a noiva descalça à cerca elétrica contra visitas indesejadas. Cada tijolinho do nosso lar, via Pix.</p><span class="opcao-cta">Explorar as ideias <span aria-hidden="true">↓</span></span></button>
         </div>
-        <section class="lista-emocionais" id="lista-emocionais" aria-labelledby="gift-list-title" hidden><p class="eyebrow">ESCOLHA COM O CORAÇÃO</p><h3 id="gift-list-title" class="lista-titulo">Presentes emocionais</h3><p class="lista-sub">Escolha um presente e faça um Pix com o valor indicado. Tudo vai direto para a construção do nosso cantinho.</p><div class="pix-box"><div><span class="pix-label">Chave Pix (e-mail)</span><strong class="pix-key" id="pix-key">brenner.carvalho00@gmail.com</strong></div><button type="button" class="button button-primary button-small" id="pix-copy">Copiar chave Pix</button></div><ul class="gift-list" id="gift-list"></ul><p id="gift-feedback" class="gift-feedback" role="status" aria-live="polite"></p></section>
+        <section class="lista-emocionais" id="lista-emocionais" aria-labelledby="gift-list-title" hidden><p class="eyebrow">ESCOLHA COM O CORAÇÃO</p><h3 id="gift-list-title" class="lista-titulo">Presentes emocionais</h3><p class="lista-sub">Escolha um presente e faça um Pix com o valor indicado. Tudo vai direto para a construção do nosso cantinho.</p><div class="pix-box"><div><span class="pix-label">Chave Pix (e-mail)</span><strong class="pix-key" id="pix-key">brenner.carvalho00@gmail.com</strong></div><div class="pix-box-actions"><button type="button" class="button button-outline button-small" id="pix-copy">Copiar chave</button><button type="button" class="button button-primary button-small" id="pix-qr">Ver QR code</button></div></div><ul class="gift-list" id="gift-list"></ul><p id="gift-feedback" class="gift-feedback" role="status" aria-live="polite"></p></section>
         <p class="gifts-note"><svg class="icon" aria-hidden="true"><use href="#icon-heart"/></svg> A sua companhia já faz esse dia ser especial.</p>
       </div>
     </section>
   </main>
+  <dialog class="pix-dialog" id="pix-dialog" aria-labelledby="pix-dialog-title">
+    <button type="button" class="pix-close" id="pix-close" aria-label="Fechar">×</button>
+    <p class="eyebrow">PRESENTEAR VIA PIX</p>
+    <h3 class="pix-dialog-title" id="pix-dialog-title"></h3>
+    <p class="pix-dialog-valor" id="pix-dialog-valor"></p>
+    <div class="pix-qr" id="pix-qr-code"></div>
+    <p class="pix-dialog-hint">Abra o app do seu banco, escolha Pix e leia o QR code. No celular, use o Pix copia e cola.</p>
+    <button type="button" class="button button-primary" id="pix-copy-code">Copiar Pix copia e cola</button>
+    <p class="pix-dialog-key">Chave: brenner.carvalho00@gmail.com</p>
+    <p class="pix-dialog-feedback" id="pix-dialog-feedback" role="status" aria-live="polite"></p>
+  </dialog>
   <footer class="site-footer"><a class="monogram" href="#home" data-goto="home" aria-label="Voltar ao início">B<span>e</span>T</a><p>Com amor, Brenner &amp; Thaylisi</p><span>07 . 02 . 2027</span></footer>
   <noscript><p class="noscript-note">Para navegar pelo site, ative o JavaScript no navegador.</p></noscript>
 </body>
