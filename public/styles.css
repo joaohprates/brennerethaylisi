@@ -348,6 +348,7 @@ h1:focus, h2:focus, main:focus { outline: none; }
 .hero-footnote .icon { width: 12px; height: 12px; color: var(--coral); }
 .hero-portrait { position: relative; width: 100%; max-width: 480px; justify-self: end; padding: 10px 10px 0; }
 .home-film { position: relative; width: 100%; height: 510px; overflow: hidden; border-radius: 48% 48% 3px 3px; background: #e4d5c8; }
+.home-photo { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
 .media-placeholder {
   display: flex;
   flex-direction: column;
