@@ -246,6 +246,8 @@ h1:focus, h2:focus, main:focus { outline: none; }
 .inv-when { margin-bottom: 10px; }
 .inv-where { color: var(--muted); margin-bottom: 10px; }
 .inv-dress { margin-bottom: 4px; }
+.inv-dress-tip { position: relative; z-index: 2; max-width: 300px; margin: 0 auto 10px; font: italic 400 14px/1.5 var(--body); color: var(--muted); }
+.inv-dress-tip strong { font-style: normal; font-weight: 600; color: var(--magenta); }
 .inv-countdown {
   display: flex;
   justify-content: center;
@@ -432,6 +434,10 @@ h1:focus, h2:focus, main:focus { outline: none; }
 .info-card h3 { font: 500 30px/1.2 var(--body); margin: 12px 0 8px; }
 .info-card > p:not(.eyebrow) { font-size: 16px; color: var(--muted); }
 .info-card .text-link { margin-top: 5px; }
+.dress-tip { max-width: 560px; margin: 34px auto 0; padding: 22px 26px; text-align: center; border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,.55); }
+.dress-tip .eyebrow { font-size: 9px; }
+.dress-tip h3 { font: 500 26px/1.2 var(--body); margin: 8px 0 6px; }
+.dress-tip p:not(.eyebrow) { font-size: 16px; color: var(--muted); }
 .location-section { display: grid; grid-template-columns: .85fr 1.5fr; gap: 55px; align-items: center; margin-top: 55px; }
 .location-copy h3 { font: 400 47px/1 var(--body); margin: 17px 0 23px; }
 .location-copy p:not(.eyebrow) { font-size: 17px; margin-bottom: 8px; }
