@@ -85,18 +85,18 @@ setInterval(updateCountdown, 1000);
 // Cartão e boleto: cole em "link" o link de pagamento criado no painel do Mercado Pago com o valor do presente.
 const PIX_KEY = "brenner.carvalho00@gmail.com";
 const PRESENTES_EMOCIONAIS = [
-  { id: 1, nome: "1 caixa de piso", desc: "Pra noiva que só anda descalça.", valor: 250, link: "" },
-  { id: 2, nome: "1 lata de tinta", desc: "Para colorir os ambientes.", valor: 300, link: "" },
+  { id: 1, nome: "1 caixa de piso", desc: "Pra noiva que só anda descalça.", valor: 250, link: "https://mpago.li/1ZjPa7H" },
+  { id: 2, nome: "1 lata de tinta", desc: "Para colorir os ambientes.", valor: 300, link: "https://mpago.li/1RVBLoK" },
   { id: 3, nome: "Pedrinhas", desc: "Para o nosso jardim.", valor: 70, link: "" },
   { id: 4, nome: "Fechadura", desc: "Para proteger nosso cantinho do amor.", valor: 85, link: "" },
   { id: 5, nome: "Mangueira", desc: "Para o noivo lavar a calçada.", valor: 100, link: "" },
   { id: 6, nome: "1 saco de cimento", desc: "Para firmar nosso amor.", valor: 80, link: "" },
-  { id: 7, nome: "Plafon", desc: "Para iluminar, porque a noiva não gosta de ambientes escuros.", valor: 150, link: "" },
-  { id: 8, nome: "Churrasqueira", desc: "Para receber os amigos.", valor: 400, link: "" },
+  { id: 7, nome: "Plafon", desc: "Para iluminar, porque a noiva não gosta de ambientes escuros.", valor: 150, link: "https://mpago.li/1wygvL7" },
+  { id: 8, nome: "Churrasqueira", desc: "Para receber os amigos.", valor: 400, link: "https://mpago.li/2mHZCEW" },
   { id: 9, nome: "Torneira", desc: "Pra deixar nosso lar bem limpinho 🙌🏻", valor: 125, link: "" },
-  { id: 10, nome: "1 cortina", desc: "Para garantir nossa privacidade (e esconder a bagunça).", valor: 180, link: "" },
-  { id: 11, nome: "Cerca elétrica", desc: "Para não recebermos mais as visitas indesejadas (que nos furtaram durante a construção kk).", valor: 400, link: "" },
-  { id: 12, nome: "1 espelho", desc: "Para conferir se estamos prontos para a vida adulta.", valor: 150, link: "" },
+  { id: 10, nome: "1 cortina", desc: "Para garantir nossa privacidade (e esconder a bagunça).", valor: 180, link: "https://mpago.li/2U8tyBd" },
+  { id: 11, nome: "Cerca elétrica", desc: "Para não recebermos mais as visitas indesejadas (que nos furtaram durante a construção kk).", valor: 400, link: "https://mpago.li/2mHZCEW" },
+  { id: 12, nome: "1 espelho", desc: "Para conferir se estamos prontos para a vida adulta.", valor: 150, link: "https://mpago.li/1wygvL7" },
 ];
 const formatBRL = (valor) => valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 const giftFeedback = document.getElementById("gift-feedback");
